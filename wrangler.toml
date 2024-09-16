@@ -1,7 +1,0 @@
-name = "cdn-gh-img"
-type = "javascript"
-workers_dev = true
-
-[site]
-bucket = "./"
-entry-point = "functions"
