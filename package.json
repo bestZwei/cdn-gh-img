@@ -1,0 +1,7 @@
+{
+    "name": "cdn-gh-img",
+    "version": "1.0.0",
+    "main": "functions/index.js",
+    "license": "MIT"
+  }
+  
