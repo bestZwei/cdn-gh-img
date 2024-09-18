@@ -1,6 +1,6 @@
-# GitHub 代理 Worker
+# GitHub 图片/文件代理 Worker
 
-这个项目是一个 Cloudflare Worker 脚本，用于代理请求到 GitHub 的原始内容 URL。它允许你从 GitHub 获取文件，并添加自定义头，例如启用 CORS。
+这个项目是一个 Cloudflare Worker 脚本，用于代理请求到 GitHub 的原始文件内容 URL。它允许你从 GitHub 获取文件，并添加自定义头，例如启用 CORS。
 
 ## 功能
 
