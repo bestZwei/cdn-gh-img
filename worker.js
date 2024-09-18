@@ -6,7 +6,7 @@ addEventListener('fetch', event => {
     const url = new URL(request.url)
     const path = url.pathname
   
-    // 构建目标URL
+    // 构建 GitHub 的原始内容 URL
     const targetUrl = `https://raw.githubusercontent.com${path}`
   
     // 转发请求到 GitHub
@@ -15,10 +15,9 @@ addEventListener('fetch', event => {
       headers: request.headers
     })
   
-    // 创建新的响应
+    // 创建新的响应对象
     const modifiedResponse = new Response(response.body, response)
     modifiedResponse.headers.set('Access-Control-Allow-Origin', '*')
   
     return modifiedResponse
   }
-  

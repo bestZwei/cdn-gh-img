@@ -1,53 +1,39 @@
-# CDN GitHub Image Proxy
+# GitHub 代理 Worker
 
-This project is a Cloudflare Pages and Workers setup to proxy images from specific GitHub repositories. It allows you to access images from GitHub in regions where direct access might be restricted.
+这个项目是一个 Cloudflare Worker 脚本，用于代理请求到 GitHub 的原始内容 URL。它允许你从 GitHub 获取文件，并添加自定义头，例如启用 CORS。
 
-## Setup
+## 功能
 
-1. **Clone the repository:**
+- 代理请求到 GitHub 的原始内容 URL。
+- 保留原始请求的方法和头信息。
+- 向响应中添加 `Access-Control-Allow-Origin: *` 头以支持 CORS。
 
-   ```bash
-   git clone https://github.com/bestZwei/cdn-gh-img.git
-   cd cdn-gh-img
-   ```
+## 工作原理
 
-2. **Configure allowed repositories:**
+1. **事件监听**：脚本监听 `fetch` 事件。
+2. **请求处理**：收到请求时，根据请求路径构建指向 GitHub 原始内容的新 URL。
+3. **获取和修改**：将请求转发到 GitHub，获取响应，并添加 `Access-Control-Allow-Origin` 头。
+4. **响应**：返回修改后的响应给客户端。
 
-   Set the `ALLOWED_REPOS` environment variable in Cloudflare Workers to specify which repositories are allowed to be proxied. For example:
+## 使用方法
 
-   ```
-   bestZwei/aaa,bestZwei/abc
-   ```
+要使用此脚本，将其部署为 Cloudflare Worker。部署后，可以通过你的 Worker URL 访问 GitHub 原始内容。
 
-3. **Deploy to Cloudflare Pages:**
+## 示例
 
-   - Go to your Cloudflare dashboard.
-   - Create a new Pages project and connect it to this repository.
-   - Ensure the `functions` directory is correctly recognized as the entry point for Workers.
+如果你的 Worker 部署在 `https://your-worker.example.com`，并且你想访问位于 `https://github.com/user/repo/blob/main/file.png` 的文件，可以通过访问：
 
-4. **Access images:**
+```
+https://your-worker.example.com/user/repo/main/file.png
+```
 
-   Use the deployed Cloudflare Pages URL to access images. For example:
+这将获取文件并在响应中包含必要的 CORS 头。
 
-   ```
-   https://your-cloudflare-pages-url/bestZwei/imgs/master/path/to/image.png
-   ```
+## 注意
 
-## Notes
+- 确保路径正确映射到 GitHub 的原始内容结构。
+- 该脚本不处理身份验证；它仅代理公共内容。
 
-- Ensure your GitHub repositories are public.
-- Follow GitHub's terms of service to avoid misuse.
+## 许可证
 
-
-### 部署步骤
-
-1. **上传项目到 GitHub**：将项目上传到你的 GitHub 仓库。
-
-2. **配置 Cloudflare Pages**：
-   - 在 Cloudflare 仪表板中创建一个新的 Pages 项目。
-   - 连接到你的 GitHub 仓库。
-   - 设置环境变量 `ALLOWED_REPOS`，指定允许代理的仓库。
-
-3. **部署项目**：完成配置后，部署项目并测试代理 URL。
-
-通过这些步骤，你可以创建一个完整的项目来代理 GitHub 仓库中的图片，并在中国大陆等地区访问这些资源。
+该项目是开源的，并在 MIT 许可证下提供。
